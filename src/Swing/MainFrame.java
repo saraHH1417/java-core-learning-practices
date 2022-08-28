@@ -6,10 +6,11 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
+        final MainPanel mainPanel = new MainPanel();
 
         setLayout(new BorderLayout());
-        add(new Toolbar(), BorderLayout.NORTH);
-        add(new MainPanel(), BorderLayout.CENTER);
+        add(new Toolbar(mainPanel), BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
 
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
