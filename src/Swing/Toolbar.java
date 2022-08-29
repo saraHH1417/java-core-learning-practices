@@ -5,27 +5,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ColorButtonListener implements ActionListener {
-
-    private ColorChangeListener colorChanger;
-    private Color color;
-    public ColorButtonListener(ColorChangeListener colorChanger, Color color) {
-        this.colorChanger = colorChanger;
-        this.color = color;
-    }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        colorChanger.changeColor(color);
-    }
-}
 
 public class Toolbar extends JToolBar {
-    public Toolbar(ColorChangeListener colorChanger) {
+    private ColorChangeListener colorChanger;
+
+    public void setColorChanger(ColorChangeListener colorChanger) {
+        this.colorChanger = colorChanger;
+    }
+
+    public Toolbar() {
         final JButton redButton = new JButton("Red");
         final JButton blueButton = new JButton("Blue");
 
-        redButton.addActionListener(new ColorButtonListener(colorChanger, Color.RED));
-        blueButton.addActionListener(new ColorButtonListener(colorChanger, Color.BLUE));
+        System.out.println("\n Using lambda expression");
+        redButton.addActionListener(e -> colorChanger.changeColor(Color.RED));
+
+        System.out.println("\n\n Using anonymous class");
+        blueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                colorChanger.changeColor(Color.BLUE);
+            }
+        });
         add(redButton);
         add(blueButton);
     }
