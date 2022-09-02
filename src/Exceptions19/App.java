@@ -14,7 +14,6 @@ public class App {
 
         int number = tryCatch();
         System.out.println("You entered " + number);
-        scanner.close();
 
         throwException();
 
@@ -22,7 +21,7 @@ public class App {
 
         tryWithResources(); // try with resources will close the connection automatically
 
-        tryWithResourcesScanner();
+        tryWithResourcesScanner(scanner);
     }
 
     public static int tryCatch() { // throws NumberFormatException
@@ -98,16 +97,16 @@ public class App {
         }
     }
 
-    public void tryWithResourcesScanner() {
-//        try (Scanner scanner = new Scanner(System.in)) { // scanner class also implements auto closable interface
-//            //so we can use it in try with resources structure
-//            System.out.print("Enter an integer > ");
-//            int value = scanner.nextInt();
-//            System.out.println("Value: " + value);
-//
-//        } catch (InputMismatchException e) {
-//            System.out.println("Invalid input");
-//        }
+    public static void tryWithResourcesScanner(Scanner scanner) {
+        try (Scanner scannerrrr = scanner) { // scanner class also implements auto closable interface
+            //,so we can use it in try with resources structure
+            System.out.print("Enter an integer > ");
+            int value = scannerrrr.nextInt();
+            System.out.println("Value: " + value);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input");
+        }
 
     }
 
