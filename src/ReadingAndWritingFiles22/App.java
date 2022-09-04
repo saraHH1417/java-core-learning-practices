@@ -5,6 +5,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+class Person implements Serializable{
+    private String name;
+    private transient int id;
+
+    public Person(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
+}
 public class App {
     public static void main(String[] args) throws IOException {
         File currentDirectory = new File(".");
@@ -58,5 +75,36 @@ public class App {
         }
 
         System.out.println("File write completed: " + fileLocationThree);
+
+        System.out.println("\n\n serializing objects");
+
+        Person p1 = new Person("Joe" , 1);
+
+        String pathString = "test.bin";
+
+        try(var os = new ObjectOutputStream(new FileOutputStream(pathString))) {
+            os.writeObject(p1);
+        }catch (FileNotFoundException e) {
+            System.out.println("Can not create file: " + pathString);
+        }catch (IOException e) {
+            System.out.println("Can not write file: " + pathString);
+        }
+
+        System.out.println("Completed. " + pathString + " created.");
+
+        try(var os = new ObjectInputStream(new FileInputStream(pathString))) {
+            Person p = (Person) os.readObject(); // we should cast the object that returns from the readObject method
+            //, to the object type that we know we have saved before
+            System.out.println("The below object is have been read from file\n" +p);
+        }catch (FileNotFoundException e) {
+            System.out.println("Can not open file: " + pathString);
+        }catch (IOException e) {
+            System.out.println("Can not read file: " + pathString);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Cannot read object from file: " + pathString);
+        }
+
+        System.out.println("Completed. " + pathString + " read successfully.");
+
     }
 }
