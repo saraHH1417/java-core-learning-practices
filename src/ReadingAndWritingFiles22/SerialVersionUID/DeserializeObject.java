@@ -1,18 +1,20 @@
 package ReadingAndWritingFiles22.SerialVersionUID;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 
-public class App2 {
+public class DeserializeObject {
     public static void main(String[] args) {
         String pathString = "test.bin";
 
+
         try(var os = new ObjectInputStream(new FileInputStream(pathString))) {
-            Person p = (Person) os.readObject(); // we should cast the object that returns from the readObject method
+            Serializable[] persons = (Serializable[]) os.readObject();// we should cast the object that returns from the readObject method
             //, to the object type that we know we have saved before
-            System.out.println("The below object is have been read from file\n" +p);
+            for (Serializable /* or var */ p: persons) {
+                System.out.println(p);
+                Person person = (Person) p;
+                System.out.println("The below object is have been read from file\n" +person);
+            }
         }catch (FileNotFoundException e) {
             System.out.println("Can not open file: " + pathString);
         }catch (IOException e) {
