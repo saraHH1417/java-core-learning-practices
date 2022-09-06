@@ -1,5 +1,6 @@
 package ConwayGameOfLIfe21.model;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -85,7 +86,7 @@ public class World {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns ; col++) {
                 int activeNeighbours = countActiveNeighbours(row, col);
-                System.out.println("(" + row + "," + col + ")" + activeNeighbours);
+//                System.out.println("(" + row + "," + col + ")" + activeNeighbours);
 
                 boolean status = false;
 
@@ -107,6 +108,47 @@ public class World {
             for (int col=0; col< columns; col++) {
                 grid[row][col] = buffer[row][col];
             }
+        }
+    }
+
+    public void save(File selectedFile) {
+        try(var dos = new DataOutputStream(new FileOutputStream(selectedFile))) {
+            dos.writeInt(rows);
+            dos.writeInt(columns);
+
+            for (int row =0; row < rows; row++) {
+                for (int col= 0; col < columns; col++) {
+                    dos.writeBoolean(grid[row][col]);
+                }
+            }
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load(File selectedFile) {
+        try(var dis = new DataInputStream(new FileInputStream(selectedFile))) {
+            int fileRows = dis.readInt();
+            int fileColumns = dis.readInt();
+
+            for (int row =0; row < fileRows; row++) {
+                for (int col=0; col< fileColumns; col++) {
+                    boolean status = dis.readBoolean();
+
+                    if (row >= rows || col >= columns) {
+                        continue;
+                    }
+                    grid[row][col]= status;
+                }
+            }
+
+            System.out.println(rows + " : " + columns);
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

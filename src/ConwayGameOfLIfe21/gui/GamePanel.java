@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -40,10 +41,10 @@ public class GamePanel extends JPanel {
             }
         });
 
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this::next,
-                500,
-                500,
-                TimeUnit.MILLISECONDS);
+//        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this::next,
+//                500,
+//                500,
+//                TimeUnit.MILLISECONDS);
     }
 
     protected void paintComponent(Graphics g) {
@@ -112,6 +113,15 @@ public class GamePanel extends JPanel {
 
     public void next() {
         world.next();
+        repaint();
+    }
+
+    public void save(File selectedFile) {
+        world.save(selectedFile);
+    }
+
+    public void open(File selectedFile) {
+        world.load(selectedFile);
         repaint();
     }
 }

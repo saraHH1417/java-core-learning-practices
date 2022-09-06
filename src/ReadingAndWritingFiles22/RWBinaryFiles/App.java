@@ -1,6 +1,8 @@
 package ReadingAndWritingFiles22.RWBinaryFiles;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class App {
     public static void main(String[] args) {
@@ -52,6 +54,21 @@ public class App {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println("\n\nEndianness");
+        int value = 0x01020304;
+        ByteBuffer buffer = ByteBuffer.allocate(4);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.putInt(value);
+
+        byte[] bytes = buffer.array();
+
+        System.out.println("\nThe below bytes are in LITTLE_ENDIAN Order, meaning the least valuable byte comes first " +
+                "and the most valuable byte comes at the end");
+        for (var b: bytes) {
+            System.out.printf("%02x ", b);
+        }
+
 
     }
 
