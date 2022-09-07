@@ -1,5 +1,6 @@
 package ConwayGameOfLIfe21.gui;
 
+import ConwayGameOfLIfe21.exceptions.MismatchedSizeException;
 import ConwayGameOfLIfe21.model.World;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -116,12 +118,25 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-    public void save(File selectedFile) {
-        world.save(selectedFile);
+    public void save(File selectedFile){
+        try {
+            world.save(selectedFile);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Cannot save selected file",
+                    "An error occurred", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    public void open(File selectedFile) {
-        world.load(selectedFile);
+    public void open(File selectedFile){
+        try{
+            world.load(selectedFile);
+        }catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Cannot load selected file",
+                    "An error occurred", JOptionPane.ERROR_MESSAGE);
+        } catch (MismatchedSizeException e) {
+            JOptionPane.showMessageDialog(this, "Loading grid size from larger or smaller grid",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
         repaint();
     }
 }

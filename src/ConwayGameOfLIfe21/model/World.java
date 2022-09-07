@@ -1,5 +1,7 @@
 package ConwayGameOfLIfe21.model;
 
+import ConwayGameOfLIfe21.exceptions.MismatchedSizeException;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
@@ -111,7 +113,7 @@ public class World {
         }
     }
 
-    public void save(File selectedFile) {
+    public void save(File selectedFile) throws IOException {
         try(var dos = new DataOutputStream(new FileOutputStream(selectedFile))) {
             dos.writeInt(rows);
             dos.writeInt(columns);
@@ -121,14 +123,10 @@ public class World {
                     dos.writeBoolean(grid[row][col]);
                 }
             }
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    public void load(File selectedFile) {
+    public void load(File selectedFile) throws IOException, MismatchedSizeException {
         try(var dis = new DataInputStream(new FileInputStream(selectedFile))) {
             int fileRows = dis.readInt();
             int fileColumns = dis.readInt();
@@ -144,11 +142,11 @@ public class World {
                 }
             }
 
+            if (fileRows != this.rows || fileColumns != this.columns) {
+                throw  new MismatchedSizeException();
+            }
+
             System.out.println(rows + " : " + columns);
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
