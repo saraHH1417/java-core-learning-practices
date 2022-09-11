@@ -1,6 +1,8 @@
 package Generics24.Hierarchy;
 
-public class Creature {
+import java.io.Serializable;
+
+public class Creature implements Serializable {
     private String name;
 
     public Creature(String name) {
