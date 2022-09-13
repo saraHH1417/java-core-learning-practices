@@ -1,8 +1,6 @@
 package Collections25.HashSet;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
@@ -45,5 +43,64 @@ public class App {
         System.out.println("remove all method");
         fruitsUnion.removeAll(fruits2Union);
         fruitsUnion.forEach(System.out::println);
+
+        System.out.println("\nLinkedHashSet");
+        LinkedHashSet<String> fruitsLinked = new LinkedHashSet<>();
+        fruitsLinked.add("banana");
+        fruitsLinked.add("carriot");
+        fruitsLinked.add("mango");
+        fruitsLinked.add("onion");
+
+        for (var fruit: fruitsLinked) {
+            System.out.println(fruit);
+        }
+
+        System.out.println(fruitsLinked.contains("cherry"));
+        System.out.println(fruitsLinked.contains("banana"));
+
+        System.out.println("\nTreeSet");
+        TreeSet<Person> people = new TreeSet<Person>();
+
+        people.add(new Person("Ethel"));
+        people.add(new Person("Ellen"));
+        people.add(new Person("Sour"));
+        people.add(new Person("James"));
+
+        for (var person: people) {
+            System.out.println(person);
+        }
+
+        System.out.println("\nSortedSet");
+        Set<Integer> numbers1 = new HashSet<>();
+        Set<Integer> numbers2 = new LinkedHashSet<>();
+        Set<Integer> numbers3= new TreeSet<>();
+
+        SortedSet<Integer> numbers4= new TreeSet<>();
+        numbers4.add(2);
+        numbers4.add(6);
+        numbers4.add(5);
+        numbers4.add(3);
+
+        numbers4.forEach(System.out::println);
+
+        System.out.println("Descending iterrator");
+        TreeSet<Integer> treeSetDesc= new TreeSet<>(numbers4);
+        for (Iterator<Integer> treeSetIt = treeSetDesc.descendingIterator(); treeSetIt.hasNext();) {
+            System.out.println(treeSetIt.next());
+        }
+
+        /*
+            1- Are duplicates allowed?
+                -yes List
+                   -  Will Items be added somewhere other than start of thar list?
+                        - yes: ArrayList
+                        -no LinkedList (only when items are added at the start of list and memory usage is not first priority)
+                - no  Set
+                    - Should Items be ordered?
+                        - yes Sort items in natural order?
+                            - yes TreeSet
+                            - no LinkedHashSet => sort Items in order added
+                        - no HashSet
+         */
     }
 }
