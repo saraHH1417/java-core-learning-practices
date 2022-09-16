@@ -1,11 +1,11 @@
-package MidiExercise;
+package MidiExercise26;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.ShortMessage;
 import java.util.List;
-import static MidiExercise.Chord.Type.*;
+import static MidiExercise26.Chord.Type.*;
 
 public class App {
     public static void main(String[] args) throws MidiUnavailableException, InvalidMidiDataException, InterruptedException {

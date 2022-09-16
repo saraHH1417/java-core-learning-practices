@@ -1,4 +1,4 @@
-package MidiExercise;
+package MidiExercise26;
 
 import java.util.HashSet;
 
