@@ -1,5 +1,7 @@
 package CollectionsRotaExercise27;
 
+import Generics24.Collections.Array;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,5 +39,10 @@ public class MapCustomObjectsExercise implements test {
             System.out.print(k);
             System.out.println(v);
         });
+    }
+
+    @Override
+    public void sayHelloDefault() {
+        System.out.println("this interface method is overridden by the inherited class");
     }
 }
