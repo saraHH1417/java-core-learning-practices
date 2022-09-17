@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class App {
+    private int classValue = 0;
     public static void main(String[] args) {
 
         var list = List.of("one", "two", "three");
@@ -46,9 +47,35 @@ public class App {
         System.out.println("**-> functional interface and lambda expressions with two parameter");
         RunnerMultiple runnerMultiple = (s1, s2) -> System.out.println(s1 + " " + s2);
         greet(runnerMultiple);
+
+        System.out.println("**-> Return values in lambda expressions");
+        Joiner joiner = (s1, s2) ->  s1 + " " + s2;
+        run(joiner);
+
+        System.out.println("**-> Lambdas and capture");
+
+        new App().lambdasAndCapture();
     }
 
     public static void greet(RunnerMultiple runner) {
         runner.runnerMultipleExecute("Hello" , "Runner Multiple");
+    }
+
+    public static void run(Joiner joiner) {
+        System.out.println(joiner.join("Hello", "Zed"));
+    }
+
+    public void lambdasAndCapture() {
+        int methodValue = 0;
+
+        Runnable r = () -> {
+            System.out.println(this);
+            System.out.println(this.classValue++);
+//            System.out.println(methodValue++); this returns error as it is obvious we can change class,
+//            variable; but we can't change method variable
+            System.out.println("method value" + methodValue);
+        };
+        r.run();
+        r.run();
     }
 }
